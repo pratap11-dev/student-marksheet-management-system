@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Marksheet Management System</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <h1>Student Marksheet Management System</h1>
+      <p>Student Performance Dashboard</p>
+    </div>
+    <div class="topright"><span id="who"></span><button id="logoutBtn" class="btn danger hidden">Logout</button></div>
+  </header>
+
+  <main class="container">
+    <section id="loginView" class="panel login-panel">
+      <h2>Login to your account</h2>
+      <p class="muted">Choose your portal and enter your credentials.</p>
+      <div class="tabs">
+        <button class="tab active" data-role="admin">Admin</button>
+        <button class="tab" data-role="student">Student</button>
+      </div>
+      <form id="loginForm">
+        <label id="userLabel" for="username">Username</label>
+        <input id="username" autocomplete="username" placeholder="Enter username" required>
+        <label for="password">Password</label>
+        <input id="password" type="password" autocomplete="current-password" placeholder="Enter password" required>
+        <button class="btn primary full" type="submit">Login</button>
+        <p id="loginError" class="error" aria-live="polite"></p>
+      </form>
+      <div class="hint"><b>Demo admin login:</b> username <code>admin</code> · password <code>admin123</code></div>
+    </section>
+
+    <section id="adminView" class="hidden">
+      <div class="welcome">
+        <div><h2>Admin Dashboard</h2><p class="muted">Manage students, subjects and marks.</p></div>
+      </div>
+      <div class="stats">
+        <article class="stat"><span>Total Students</span><strong id="studentCount">0</strong></article>
+        <article class="stat"><span>Total Subjects</span><strong id="subjectCount">0</strong></article>
+        <article class="stat"><span>Results Entered</span><strong id="resultCount">0</strong></article>
+      </div>
+
+      <section id="dash"></section>
+      <h2 class="mgmt">Manage records</h2>
+
+      <section class="panel">
+        <h3>Add / Update Student</h3>
+        <form id="studentForm" class="form-grid">
+          <input type="hidden" id="editStudentId">
+          <div><label for="studentName">Student Name</label><input id="studentName" required placeholder="e.g. Rahul Sharma"></div>
+          <div><label for="rollNo">Roll Number</label><input id="rollNo" required placeholder="e.g. 101"></div>
+          <div><label for="studentClass">Class / Semester</label><input id="studentClass" required placeholder="e.g. B.Tech 3rd Sem"></div>
+          <div><label for="studentPassword">Student Password</label><input id="studentPassword" placeholder="Set login password"></div>
+          <div class="form-actions"><button class="btn primary" type="submit" id="studentSubmit">Save Student</button><button class="btn secondary" type="button" id="cancelEdit">Clear</button></div>
+        </form>
+      </section>
+
+      <section class="panel">
+        <div class="section-head"><h3>Students</h3><input id="studentSearch" class="search" placeholder="Search name or roll number"></div>
+        <div class="table-wrap"><table><thead><tr><th>Name</th><th>Roll No.</th><th>Class</th><th>Actions</th></tr></thead><tbody id="studentsTable"></tbody></table></div>
+      </section>
+
+      <section class="panel">
+        <h3>Manage Subjects</h3>
+        <form id="subjectForm" class="inline-form"><input id="subjectName" placeholder="Subject name" required><input id="maxMarks" type="number" min="1" value="100" required aria-label="Maximum marks"><button class="btn primary">Add Subject</button></form>
+        <div id="subjectsList" class="chips"></div>
+      </section>
+
+      <section class="panel">
+        <h3>Enter / Update Marks</h3>
+        <form id="marksForm" class="form-grid">
+          <div><label for="marksStudent">Student</label><select id="marksStudent" required></select></div>
+          <div><label for="marksSubject">Subject</label><select id="marksSubject" required></select></div>
+          <div><label for="marksObtained">Marks Obtained</label><input id="marksObtained" type="number" min="0" step="0.5" required placeholder="e.g. 78"></div>
+          <div class="form-actions"><button class="btn primary">Save Marks</button></div>
+        </form>
+        <p class="muted small">Marks must be between 0 and the subject's maximum marks.</p>
+      </section>
+
+      <section class="panel">
+        <div class="section-head"><h3>View Marksheet</h3><select id="resultStudent" class="search"></select></div>
+        <div id="adminMarksheet"></div>
+      </section>
+      <section class="panel utility-row">
+        <div><h3>Data Backup</h3><p class="muted small">Export your project data or restore a previously exported JSON backup.</p></div>
+        <div class="button-row"><button id="exportBtn" class="btn secondary">Export Backup</button><label class="btn secondary file-label">Import Backup<input id="importFile" type="file" accept="application/json" hidden></label></div>
+      </section>
+    </section>
+
+    <section id="studentView" class="hidden">
+      <div class="welcome"><div><h2>Student Portal</h2><p id="studentWelcome" class="muted"></p></div></div>
+      <section class="panel"><div id="studentMarksheet"></div></section>
+      <section class="panel" id="studentCharts"></section>
+    </section>
+  </main>
+  <footer>Student Marksheet Management System · Standalone Demo Project</footer>
+  <script src="app.js"></script>
+  <script src="charts.js"></script>
+</body>
+</html>
